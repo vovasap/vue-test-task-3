@@ -53,6 +53,11 @@ module.exports = (env) => {
         },
       ],
     },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src/'),
+      }
+    },
     plugins: [new VueLoaderPlugin()],
     devServer: {
       static: {
