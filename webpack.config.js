@@ -1,18 +1,18 @@
-const path = require("path");
-const webpack = require("webpack");
-const { VueLoaderPlugin } = require("vue-loader");
-const dotenv = require('dotenv').config( {
-  path: path.join(__dirname, '.env')
-} );
+const path = require('path')
+const webpack = require('webpack')
+const { VueLoaderPlugin } = require('vue-loader')
+const dotenv = require('dotenv').config({
+  path: path.join(__dirname, '.env'),
+})
 
 module.exports = (env) => {
-  console.log(env);
+  console.log(env)
   return {
-    mode: env.production ? "production" : "development",
-    entry: "./src/index.ts",
+    mode: env.production ? 'production' : 'development',
+    entry: './src/index.ts',
     output: {
-      filename: "index.js",
-      path: path.resolve(__dirname, "dist"),
+      filename: 'index.js',
+      path: path.resolve(__dirname, 'dist'),
     },
     module: {
       rules: [
@@ -20,15 +20,15 @@ module.exports = (env) => {
           test: /\.m?js$/,
           exclude: /(node_modules|bower_components)/,
           use: {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
-              presets: ["@babel/preset-env"],
+              presets: ['@babel/preset-env'],
             },
           },
         },
         {
           test: /\.tsx?$/,
-          loader: "ts-loader",
+          loader: 'ts-loader',
           options: {
             appendTsSuffixTo: [/\.vue$/],
           },
@@ -36,10 +36,10 @@ module.exports = (env) => {
         },
         {
           test: /\.vue$/,
-          loader: "vue-loader",
+          loader: 'vue-loader',
           options: {
             loaders: {
-              ts: "ts-loader",
+              ts: 'ts-loader',
             },
             esModule: true,
           },
@@ -48,11 +48,11 @@ module.exports = (env) => {
           test: /\.s[ac]ss$/i,
           use: [
             // Creates `style` nodes from JS strings
-            "style-loader",
+            'style-loader',
             // Translates CSS into CommonJS
-            "css-loader",
+            'css-loader',
             // Compiles Sass to CSS
-            "sass-loader",
+            'sass-loader',
           ],
         },
         {
@@ -68,13 +68,14 @@ module.exports = (env) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src/'),
-      }
+      },
+      extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
       new VueLoaderPlugin(),
       new webpack.DefinePlugin({
-        "process.env": JSON.stringify(dotenv.parsed)
-      })
+        'process.env': JSON.stringify(dotenv.parsed),
+      }),
     ],
     devServer: {
       static: {
@@ -83,5 +84,5 @@ module.exports = (env) => {
       compress: true,
       port: 5050,
     },
-  };
-};
+  }
+}
