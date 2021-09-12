@@ -1,6 +1,9 @@
 <template>
   <div class="settings">
-    <!-- <pre>{{ citiesWeather }}</pre> -->
+    <div class="settings__header">
+      <p class="settings__title">Settings</p>
+      <w-button icon="x" @click="close" />
+    </div>
     <settings-item
       v-for="(cityWeather, index) in citiesWeather"
       :cityWeather="cityWeather"
@@ -10,7 +13,6 @@
       @onDragOver="onDragOver"
       :key="cityWeather.id"
     />
-    <p class="settings__title">Settings</p>
     <label class="settings__input-title" for="location">Add Location:</label>
     <div>
       <input
@@ -108,6 +110,10 @@ export default {
       setValue()
     }
 
+    const close = () => {
+      emit('toggleDisplay')
+    }
+
     return {
       query,
       addLocation,
@@ -115,6 +121,7 @@ export default {
       deleteItem,
       onDragStart,
       onDragOver,
+      close,
     }
   },
 }
@@ -123,7 +130,16 @@ export default {
 .settings {
   max-width: 320px;
 
-  &__title,
+  &__header {
+    display: flex;
+  }
+
+  &__title {
+    flex: 1 0 auto;
+
+    font-weight: 700;
+  }
+
   &__input-title {
     font-weight: 700;
   }

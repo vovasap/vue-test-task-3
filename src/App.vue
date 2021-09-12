@@ -1,5 +1,6 @@
 <template>
-  <settings v-model="citiesWeather" />
+  <div v-if="displayWeatherInfo">weather info</div>
+  <settings v-else v-model="citiesWeather" @toggleDisplay="toggleDisplay" />
 </template>
 
 <script lang="ts">
@@ -13,10 +14,16 @@ export default defineComponent({
     Settings,
   },
   setup() {
+    const displayWeatherInfo = ref<boolean>(false)
     const citiesWeather = ref<Array<TCityWeather>>([])
+    const toggleDisplay = () => {
+      displayWeatherInfo.value = !displayWeatherInfo.value
+    }
 
     return {
       citiesWeather,
+      toggleDisplay,
+      displayWeatherInfo,
     }
   },
 })
