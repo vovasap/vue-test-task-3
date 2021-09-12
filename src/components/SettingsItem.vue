@@ -1,6 +1,8 @@
 <template>
-  <div class="settings-item">
-    <w-button icon="list" size="18" />
+  <div class="settings-item" @dragover="onDragOver">
+    <div draggable="true" @dragstart="onDragStart($event, index)">
+      <w-button icon="list" size="18" />
+    </div>
     <span class="settings-item__title">{{ `${city}, ${country}` }}</span>
     <w-button icon="trash" size="16" @click="deleteItem" />
   </div>
@@ -25,6 +27,9 @@ export default {
       type: Number,
       required: true,
     },
+    index: {
+      type: Number,
+    },
   },
   setup(props: any, context: any) {
     const { emit } = context
@@ -32,8 +37,18 @@ export default {
       emit('deleteItem', props.id)
     }
 
+    const onDragStart = (e: any, index: number) => {
+      emit('onDragStart', { e, index })
+    }
+
+    const onDragOver = () => {
+      emit('onDragOver', props.index)
+    }
+
     return {
       deleteItem,
+      onDragStart,
+      onDragOver,
     }
   },
 }

@@ -2,11 +2,14 @@
   <div class="settings">
     <!-- <pre>{{ citiesWeather }}</pre> -->
     <settings-item
-      v-for="cityWeather in citiesWeather"
+      v-for="(cityWeather, index) in citiesWeather"
       :city="cityWeather.name"
       :country="cityWeather.sys.country"
       :id="cityWeather.id"
+      :index="index"
       @deleteItem="deleteItem"
+      @onDragStart="onDragStart"
+      @onDragOver="onDragOver"
       :key="cityWeather.id"
     />
     <p class="settings__title">Settings</p>
@@ -45,6 +48,10 @@ export default {
     const citiesWeather = ref<Array<Record<string, any>>>(props.value)
     const query = ref<string>('pskov')
 
+    const setValue = (): void => {
+      emit('input', citiesWeather.value)
+    }
+
     const getWeatherByLocation = async (
       location: string
     ): Promise<Record<string, any> | null> => {
@@ -63,7 +70,7 @@ export default {
       getWeatherByLocation(query.value).then((weather) => {
         if (weather) {
           citiesWeather.value.push(weather)
-          emit('input', citiesWeather.value)
+          setValue()
           query.value = ''
         }
       })
@@ -71,7 +78,34 @@ export default {
 
     const deleteItem = (id: number): void => {
       citiesWeather.value = citiesWeather.value.filter((city) => city.id !== id)
-      emit('input', citiesWeather.value)
+      setValue()
+    }
+
+    let draggedItemIndex: number | null = null
+    let draggedItem: any = null
+
+    const onDragStart = ({ e, index }: any) => {
+      draggedItemIndex = index
+      if (draggedItemIndex !== null) {
+        draggedItem = citiesWeather.value[draggedItemIndex]
+      }
+      const target = e.target.closest('.settings-item')
+      e.dataTransfer.effectAllowed = 'move'
+      e.dataTransfer.setData('text/plain', target)
+      e.dataTransfer.setDragImage(target, 20, 20)
+    }
+
+    const onDragOver = (index: any) => {
+      if (draggedItem === citiesWeather.value[index]) {
+        return
+      }
+
+      citiesWeather.value = citiesWeather.value.filter(
+        (item) => item !== draggedItem
+      )
+      citiesWeather.value.splice(index, 0, draggedItem)
+
+      setValue()
     }
 
     return {
@@ -79,6 +113,8 @@ export default {
       addLocation,
       citiesWeather,
       deleteItem,
+      onDragStart,
+      onDragOver,
     }
   },
 }
