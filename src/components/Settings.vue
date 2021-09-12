@@ -3,9 +3,7 @@
     <!-- <pre>{{ citiesWeather }}</pre> -->
     <settings-item
       v-for="(cityWeather, index) in citiesWeather"
-      :city="cityWeather.name"
-      :country="cityWeather.sys.country"
-      :id="cityWeather.id"
+      :cityWeather="cityWeather"
       :index="index"
       @deleteItem="deleteItem"
       @onDragStart="onDragStart"
@@ -29,7 +27,9 @@
 <script lang="ts">
 import WButton from '@/components/WButton.vue'
 import SettingsItem from '@/components/SettingsItem.vue'
-import { ref } from 'vue'
+import { PropType, ref } from 'vue'
+import { getWeather } from '@/utils/utils'
+import { TCityWeather } from '@/types/global'
 
 export default {
   name: 'settings',
@@ -39,13 +39,13 @@ export default {
   },
   props: {
     value: {
-      type: Array,
+      type: Array as PropType<Array<TCityWeather>>,
       default: () => [],
     },
   },
   setup(props: any, context: any) {
     const { emit } = context
-    const citiesWeather = ref<Array<Record<string, any>>>(props.value)
+    const citiesWeather = ref<Array<TCityWeather>>(props.value)
     const query = ref<string>('pskov')
 
     const setValue = (): void => {
@@ -69,7 +69,7 @@ export default {
     const addLocation = (): void => {
       getWeatherByLocation(query.value).then((weather) => {
         if (weather) {
-          citiesWeather.value.push(weather)
+          citiesWeather.value.push(getWeather(weather))
           setValue()
           query.value = ''
         }

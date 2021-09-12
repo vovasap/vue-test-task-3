@@ -3,28 +3,25 @@
     <div draggable="true" @dragstart="onDragStart($event, index)">
       <w-button icon="list" size="18" />
     </div>
-    <span class="settings-item__title">{{ `${city}, ${country}` }}</span>
+    <span class="settings-item__title">{{
+      `${cityWeather.city}, ${cityWeather.country}`
+    }}</span>
     <w-button icon="trash" size="16" @click="deleteItem" />
   </div>
 </template>
 <script lang="ts">
+import { TCityWeather } from '@/types/global'
 import WButton from './WButton.vue'
+import { PropType } from 'vue'
 
 export default {
   components: {
     WButton,
   },
   props: {
-    city: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
-    id: {
-      type: Number,
+    cityWeather: {
+      type: Object as PropType<TCityWeather>,
+
       required: true,
     },
     index: {
@@ -34,14 +31,14 @@ export default {
   setup(props: any, context: any) {
     const { emit } = context
     const deleteItem = (): void => {
-      emit('deleteItem', props.id)
+      emit('deleteItem', props.cityWeather.id)
     }
 
-    const onDragStart = (e: any, index: number) => {
+    const onDragStart = (e: any, index: number): void => {
       emit('onDragStart', { e, index })
     }
 
-    const onDragOver = () => {
+    const onDragOver = (): void => {
       emit('onDragOver', props.index)
     }
 
