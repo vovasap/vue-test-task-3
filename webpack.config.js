@@ -1,5 +1,9 @@
 const path = require("path");
+const webpack = require("webpack");
 const { VueLoaderPlugin } = require("vue-loader");
+const dotenv = require('dotenv').config( {
+  path: path.join(__dirname, '.env')
+} );
 
 module.exports = (env) => {
   console.log(env);
@@ -66,7 +70,12 @@ module.exports = (env) => {
         '@': path.resolve(__dirname, 'src/'),
       }
     },
-    plugins: [new VueLoaderPlugin()],
+    plugins: [
+      new VueLoaderPlugin(),
+      new webpack.DefinePlugin({
+        "process.env": JSON.stringify(dotenv.parsed)
+      })
+    ],
     devServer: {
       static: {
         directory: path.join(__dirname, 'dist'),
