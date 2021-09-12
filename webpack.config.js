@@ -51,6 +51,14 @@ module.exports = (env) => {
             "sass-loader",
           ],
         },
+        {
+          test: /\.(png|jpg|svg)$/i,
+          use: [
+            {
+              loader: 'url-loader',
+            },
+          ],
+        },
       ],
     },
     resolve: {
