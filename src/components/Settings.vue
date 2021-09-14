@@ -30,8 +30,7 @@
 import WButton from '@/components/WButton.vue'
 import SettingsItem from '@/components/SettingsItem.vue'
 import { PropType, ref } from 'vue'
-import { getWeather } from '@/utils/utils'
-import { TCityWeather } from '@/types/global'
+import Weather from '@/types/Weather'
 
 export default {
   name: 'settings',
@@ -40,28 +39,32 @@ export default {
     SettingsItem,
   },
   props: {
-    value: {
-      type: Array as PropType<Array<TCityWeather>>,
+    citiesWeather: {
+      type: Array as PropType<Array<Weather>>,
       default: () => [],
     },
   },
   setup(props: any, context: any) {
     const { emit } = context
-    const citiesWeather = ref<Array<TCityWeather>>(props.value)
+    const citiesWeather = ref<Array<Weather>>(props.citiesWeather)
     const query = ref<string>('pskov')
 
     const setValue = (): void => {
-      emit('input', citiesWeather.value)
+      emit('update:citiesWeather', citiesWeather.value)
     }
 
     const getWeatherByLocation = async (
       location: string
-    ): Promise<Record<string, any> | null> => {
+    ): Promise<Document | null> => {
       const response = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}`
+        `http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&mode=xml`
       )
       if (response.status === 200) {
-        return await response.json()
+        return await response
+          .text()
+          .then((str) =>
+            new window.DOMParser().parseFromString(str, 'text/xml')
+          )
       } else {
         //TODO handle error
         return new Promise((resolve) => resolve(null))
@@ -71,7 +74,7 @@ export default {
     const addLocation = (): void => {
       getWeatherByLocation(query.value).then((weather) => {
         if (weather) {
-          citiesWeather.value.push(getWeather(weather))
+          citiesWeather.value.push(new Weather(weather))
           setValue()
           query.value = ''
         }
@@ -79,7 +82,9 @@ export default {
     }
 
     const deleteItem = (id: number): void => {
-      citiesWeather.value = citiesWeather.value.filter((city) => city.id !== id)
+      citiesWeather.value = citiesWeather.value.filter(
+        (cityWeather) => cityWeather.id !== id
+      )
       setValue()
     }
 

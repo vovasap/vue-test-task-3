@@ -10,9 +10,9 @@
   </div>
 </template>
 <script lang="ts">
-import { TCityWeather } from '@/types/global'
 import WButton from './WButton.vue'
 import { PropType } from 'vue'
+import Weather from '@/types/Weather'
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
   },
   props: {
     cityWeather: {
-      type: Object as PropType<TCityWeather>,
+      type: Object as PropType<Weather>,
 
       required: true,
     },

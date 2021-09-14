@@ -1,21 +1,26 @@
 <template>
-  <div v-if="displayWeatherInfo">weather info</div>
-  <settings v-else v-model="citiesWeather" @toggleDisplay="toggleDisplay" />
+  <weather-info :cities-weather="citiesWeather" />
+  <settings
+    v-model:cities-weather="citiesWeather"
+    @toggleDisplay="toggleDisplay"
+  />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import Settings from '@/components/Settings.vue'
-import { TCityWeather } from './types/global'
+import Weather from './types/Weather'
+import WeatherInfo from '@/components/WeatherInfo.vue'
 
 export default defineComponent({
-  name: 'App',
+  name: 'app',
   components: {
+    WeatherInfo,
     Settings,
   },
   setup() {
     const displayWeatherInfo = ref<boolean>(false)
-    const citiesWeather = ref<Array<TCityWeather>>([])
+    const citiesWeather = ref<Array<Weather>>([])
     const toggleDisplay = () => {
       displayWeatherInfo.value = !displayWeatherInfo.value
     }
