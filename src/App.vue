@@ -1,6 +1,11 @@
 <template>
-  <weather-info :cities-weather="citiesWeather" />
+  <weather-info
+    v-if="displayWeatherInfo"
+    :cities-weather="citiesWeather"
+    @toggleDisplay="toggleDisplay"
+  />
   <settings
+    v-else
     v-model:cities-weather="citiesWeather"
     @toggleDisplay="toggleDisplay"
   />
