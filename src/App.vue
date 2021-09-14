@@ -1,14 +1,16 @@
 <template>
-  <weather-info
-    v-if="displayWeatherInfo"
-    :cities-weather="citiesWeather"
-    @toggleDisplay="toggleDisplay"
-  />
-  <settings
-    v-else
-    v-model:cities-weather="citiesWeather"
-    @toggleDisplay="toggleDisplay"
-  />
+  <div class="app">
+    <weather-info
+      v-if="displayWeatherInfo"
+      :cities-weather="citiesWeather"
+      @toggleDisplay="toggleDisplay"
+    />
+    <settings
+      v-else
+      v-model:cities-weather="citiesWeather"
+      @toggleDisplay="toggleDisplay"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -38,3 +40,13 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+.app {
+  max-width: 680px;
+  margin: 0 auto;
+
+  @media (max-width: 700px) {
+    max-width: 360px;
+  }
+}
+</style>

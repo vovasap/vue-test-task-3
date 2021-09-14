@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <w-button icon="gear" @click="$emit('toggleDisplay')" />
+  <div class="weather-info">
+    <w-button
+      class="weather-info__gear"
+      icon="gear"
+      @click="$emit('toggleDisplay')"
+    />
     <weather-info-item
       v-for="cityWeather in citiesWeather"
+      class="weather-info__item"
       :city-weather="cityWeather"
       :key="cityWeather.id"
     />
@@ -28,3 +33,20 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+.weather-info {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    width: 320px;
+  }
+
+  &__gear {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+</style>

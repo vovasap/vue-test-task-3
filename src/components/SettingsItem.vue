@@ -54,6 +54,7 @@ export default {
 .settings-item {
   display: flex;
   align-items: center;
+  max-width: 360px;
   margin-bottom: 8px;
   padding: 2px;
 

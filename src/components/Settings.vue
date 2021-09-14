@@ -14,7 +14,7 @@
       :key="cityWeather.id"
     />
     <label class="settings__input-title" for="location">Add Location:</label>
-    <div>
+    <div class="settings__input-form">
       <input
         id="location"
         class="settings__input"
@@ -133,7 +133,8 @@ export default {
 </script>
 <style lang="scss">
 .settings {
-  max-width: 320px;
+  width: min-content;
+  margin: 0 auto;
 
   &__header {
     display: flex;
@@ -149,7 +150,13 @@ export default {
     font-weight: 700;
   }
 
+  &__input-form {
+    display: flex;
+    max-width: 360px;
+  }
+
   &__input {
+    flex: 1 0 auto;
     padding: 4px;
   }
 }
