@@ -8,7 +8,7 @@ export default class Xml {
       return document.getElementsByTagName(tags[0])[0].getAttribute(attribute)
     }
     return Xml.getAttributeValue(
-      document.getElementsByTagName(tags[tags.length - 1])[0],
+      document.getElementsByTagName(tags[0])[0],
       attribute,
       ...tags.slice(1)
     )
@@ -22,7 +22,7 @@ export default class Xml {
       return document.getElementsByTagName(tags[0])[0].textContent
     }
     return Xml.getTextContent(
-      document.getElementsByTagName(tags[tags.length - 1])[0],
+      document.getElementsByTagName(tags[0])[0],
       ...tags.slice(1)
     )
   }
