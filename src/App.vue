@@ -14,10 +14,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 import Settings from '@/components/Settings.vue'
 import Weather from './types/Weather'
 import WeatherInfo from '@/components/WeatherInfo.vue'
+import { getWeatherByLocation } from './utils/utils'
 
 export default defineComponent({
   name: 'app',
@@ -26,11 +27,27 @@ export default defineComponent({
     Settings,
   },
   setup() {
-    const displayWeatherInfo = ref<boolean>(false)
+    const displayWeatherInfo = ref<boolean>(true)
     const citiesWeather = ref<Array<Weather>>([])
-    const toggleDisplay = () => {
+    const toggleDisplay = (): void => {
       displayWeatherInfo.value = !displayWeatherInfo.value
     }
+
+    onBeforeMount(() => {
+      const cities: Array<string> = JSON.parse(
+        window.localStorage.getItem('cities') || '[]'
+      )
+
+      if (cities.length) {
+        cities.forEach((city) => {
+          getWeatherByLocation(city).then((weather) => {
+            if (weather) {
+              citiesWeather.value.push(new Weather(weather))
+            }
+          })
+        })
+      }
+    })
 
     return {
       citiesWeather,
