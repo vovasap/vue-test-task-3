@@ -71,10 +71,15 @@ export default {
       getWeatherByLocation(query.value)
         .then((weather) => {
           if (weather.getElementsByTagName('current')[0]) {
-            citiesWeather.value.push(new Weather(weather))
-            setValue()
+            const newWeather = new Weather(weather)
+            if (citiesWeather.value.some((w) => w.id === newWeather.id)) {
+              validationMessage.value = 'dublicate'
+            } else {
+              citiesWeather.value.push(newWeather)
+              validationMessage.value = null
+              setValue()
+            }
             query.value = ''
-            validationMessage.value = null
           } else {
             validationMessage.value =
               weather.getElementsByTagName('message')[0].textContent
