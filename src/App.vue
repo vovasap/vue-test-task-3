@@ -16,9 +16,9 @@
 <script lang="ts">
 import { defineComponent, onBeforeMount, ref } from 'vue'
 import Settings from '@/components/Settings.vue'
-import Weather from './types/Weather'
+import Weather from '@/types/Weather'
 import WeatherInfo from '@/components/WeatherInfo.vue'
-import { getWeatherByLatLon, getWeatherByLocation } from './utils/utils'
+import { getWeatherByLatLon, getWeatherByLocation } from '@/utils/utils'
 
 export default defineComponent({
   name: 'app',
@@ -67,7 +67,6 @@ export default defineComponent({
                     getWeatherByLatLon(lat, lon).then((weather) => {
                       if (weather) {
                         citiesWeather.value.push(new Weather(weather))
-                        navigator.geolocation.clearWatch(id)
                       }
                     })
                   })

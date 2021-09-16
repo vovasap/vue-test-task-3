@@ -6,7 +6,6 @@ const dotenv = require('dotenv').config({
 })
 
 module.exports = (env) => {
-  console.log(env)
   return {
     mode: env.production ? 'production' : 'development',
     entry: './src/index.ts',
