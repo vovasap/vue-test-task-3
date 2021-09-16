@@ -24,6 +24,7 @@
       />
       <w-button icon="arrow-return-left" @click="addLocation" />
     </div>
+    <small class="settings__validation">{{ validationMessage }}</small>
   </div>
 </template>
 
@@ -50,6 +51,7 @@ export default {
     const { emit } = context
     const citiesWeather = ref<Array<Weather>>(props.citiesWeather)
     const query = ref<string>('')
+    const validationMessage = ref<string | null>(null)
 
     const setValue = (): void => {
       window.localStorage.setItem(
@@ -61,10 +63,14 @@ export default {
 
     const addLocation = (): void => {
       getWeatherByLocation(query.value).then((weather) => {
-        if (weather) {
+        if (weather.getElementsByTagName('current')[0]) {
           citiesWeather.value.push(new Weather(weather))
           setValue()
           query.value = ''
+          validationMessage.value = null
+        } else {
+          validationMessage.value =
+            weather.getElementsByTagName('message')[0].textContent
         }
       })
     }
@@ -115,6 +121,7 @@ export default {
       onDragStart,
       onDragOver,
       close,
+      validationMessage,
     }
   },
 }
@@ -146,6 +153,10 @@ export default {
   &__input {
     flex: 1 0 auto;
     padding: 4px;
+  }
+
+  &__validation {
+    color: red;
   }
 }
 </style>
