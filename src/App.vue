@@ -19,6 +19,7 @@ import Settings from '@/components/Settings.vue'
 import Weather from '@/types/Weather'
 import WeatherInfo from '@/components/WeatherInfo.vue'
 import { getWeatherByLatLon, getWeatherByLocation } from '@/utils/utils'
+import Api from './api/Api'
 
 export default defineComponent({
   name: 'app',
@@ -56,22 +57,24 @@ export default defineComponent({
               if (weather) {
                 citiesWeather.value.push(new Weather(weather))
                 navigator.geolocation.clearWatch(id)
+              } else {
+                // error handling
               }
             })
           },
           () => {
-            fetch('//api.ipify.org?format=json').then((response) => {
-              response.json().then(({ ip }) => {
-                fetch(`http://ip-api.com/json/${ip}?fields=lat,lon`).then((r) =>
-                  r.json().then(({ lat, lon }) => {
-                    getWeatherByLatLon(lat, lon).then((weather) => {
-                      if (weather) {
-                        citiesWeather.value.push(new Weather(weather))
-                      }
-                    })
+            Api.json('//api.ipify.org?format=json').then(({ ip }) => {
+              Api.json(`http://ip-api.com/json/${ip}?fields=lat,lon`).then(
+                ({ lat, lon }) => {
+                  getWeatherByLatLon(lat, lon).then((weather) => {
+                    if (weather.getElementsByTagName('current')[0]) {
+                      citiesWeather.value.push(new Weather(weather))
+                    } else {
+                      // error handling
+                    }
                   })
-                )
-              })
+                }
+              )
             })
           }
         )
