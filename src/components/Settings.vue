@@ -18,8 +18,9 @@
       <input
         id="location"
         class="settings__input"
-        type="text"
         v-model="query"
+        type="text"
+        placeholder="City name"
       />
       <w-button icon="arrow-return-left" @click="addLocation" />
     </div>
@@ -48,7 +49,7 @@ export default {
   setup(props: any, context: any) {
     const { emit } = context
     const citiesWeather = ref<Array<Weather>>(props.citiesWeather)
-    const query = ref<string>('pskov')
+    const query = ref<string>('')
 
     const setValue = (): void => {
       window.localStorage.setItem(
