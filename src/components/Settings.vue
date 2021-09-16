@@ -22,7 +22,11 @@
         type="text"
         placeholder="City name"
       />
-      <w-button icon="arrow-return-left" @click="addLocation" />
+      <w-button
+        icon="arrow-return-left"
+        @click="addLocation"
+        :disabled="isLoading"
+      />
     </div>
     <small class="settings__validation">{{ validationMessage }}</small>
   </div>
@@ -52,6 +56,7 @@ export default {
     const citiesWeather = ref<Array<Weather>>(props.citiesWeather)
     const query = ref<string>('')
     const validationMessage = ref<string | null>(null)
+    const isLoading = ref<boolean>(false)
 
     const setValue = (): void => {
       window.localStorage.setItem(
@@ -62,17 +67,20 @@ export default {
     }
 
     const addLocation = (): void => {
-      getWeatherByLocation(query.value).then((weather) => {
-        if (weather.getElementsByTagName('current')[0]) {
-          citiesWeather.value.push(new Weather(weather))
-          setValue()
-          query.value = ''
-          validationMessage.value = null
-        } else {
-          validationMessage.value =
-            weather.getElementsByTagName('message')[0].textContent
-        }
-      })
+      isLoading.value = true
+      getWeatherByLocation(query.value)
+        .then((weather) => {
+          if (weather.getElementsByTagName('current')[0]) {
+            citiesWeather.value.push(new Weather(weather))
+            setValue()
+            query.value = ''
+            validationMessage.value = null
+          } else {
+            validationMessage.value =
+              weather.getElementsByTagName('message')[0].textContent
+          }
+        })
+        .finally(() => (isLoading.value = false))
     }
 
     const deleteItem = (id: number): void => {
@@ -122,6 +130,7 @@ export default {
       onDragOver,
       close,
       validationMessage,
+      isLoading,
     }
   },
 }

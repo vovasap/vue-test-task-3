@@ -1,14 +1,16 @@
 <template>
-  <button class="w-button">
-    <img :style="{width: `${size}px`}" class="w-button_icon"
-         :src="require(`../assets/svg/${icon}.svg`).default"
-         :alt="icon"
+  <button class="w-button" :disabled="disabled">
+    <img
+      :style="{ width: `${size}px` }"
+      class="w-button__icon"
+      :src="require(`../assets/svg/${icon}.svg`).default"
+      :alt="icon"
     />
-    <slot/>
+    <slot />
   </button>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'w-button',
@@ -20,7 +22,11 @@ export default defineComponent({
     size: {
       type: [String, Number],
       default: 20,
-    }
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 </script>
@@ -31,7 +37,7 @@ export default defineComponent({
   background: transparent;
   border: none;
   cursor: pointer;
-  &_icon {
+  &__icon {
     vertical-align: middle;
   }
 }
