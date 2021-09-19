@@ -62,8 +62,8 @@ export default defineComponent({
             })
           },
           () => {
-            Api.json('http://api.ipify.org?format=json').then(({ ip }) => {
-              Api.json(`http://ip-api.com/json/${ip}?fields=lat,lon`).then(
+            Api.json('https://api.ipify.org?format=json').then(({ ip }) => {
+              Api.json(`https://ip-api.com/json/${ip}?fields=lat,lon`).then(
                 ({ lat, lon }) => {
                   Weather.getByLatLon(lat, lon).then((weather) => {
                     if (weather.getElementsByTagName('current')[0]) {

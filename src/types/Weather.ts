@@ -10,7 +10,7 @@ export default class Weather {
 
   public static getByLocation = async (location: string): Promise<Document> => {
     return Weather.get(
-      `http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&mode=xml`
+      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&mode=xml`
     )
   }
 
@@ -19,7 +19,7 @@ export default class Weather {
     lon: number
   ): Promise<Document> => {
     return Weather.get(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&mode=xml`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&mode=xml`
     )
   }
 
