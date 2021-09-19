@@ -1,5 +1,5 @@
 <template>
-  <div class="settings">
+  <div class="settings" @keyup.enter="addLocation">
     <div class="settings__header">
       <p class="settings__title">Settings</p>
       <w-button icon="x" @click="close" />
