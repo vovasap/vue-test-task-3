@@ -1,6 +1,28 @@
 import Xml from '@/helpers/Xml'
+import Api from '@/api/Api'
 
 export default class Weather {
+  private static get = (requestUrl: string): Promise<Document> => {
+    return Api.xml(requestUrl).then((str) => {
+      return new window.DOMParser().parseFromString(str, 'text/xml')
+    })
+  }
+
+  public static getByLocation = async (location: string): Promise<Document> => {
+    return Weather.get(
+      `http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&mode=xml`
+    )
+  }
+
+  public static getByLatLon = async (
+    lat: number,
+    lon: number
+  ): Promise<Document> => {
+    return Weather.get(
+      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&mode=xml`
+    )
+  }
+
   private weather: Document
 
   constructor(weather: Document) {

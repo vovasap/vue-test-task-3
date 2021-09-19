@@ -18,7 +18,6 @@ import { defineComponent, onBeforeMount, ref } from 'vue'
 import Settings from '@/components/Settings.vue'
 import Weather from '@/types/Weather'
 import WeatherInfo from '@/components/WeatherInfo.vue'
-import { getWeatherByLatLon, getWeatherByLocation } from '@/utils/utils'
 import Api from './api/Api'
 
 export default defineComponent({
@@ -41,7 +40,7 @@ export default defineComponent({
 
       if (cities.length) {
         cities.forEach((city) => {
-          getWeatherByLocation(city).then((weather) => {
+          Weather.getByLocation(city).then((weather) => {
             if (weather) {
               citiesWeather.value.push(new Weather(weather))
             }
@@ -50,7 +49,7 @@ export default defineComponent({
       } else {
         const id = navigator.geolocation.watchPosition(
           (response) => {
-            getWeatherByLatLon(
+            Weather.getByLatLon(
               response.coords.latitude,
               response.coords.longitude
             ).then((weather) => {
@@ -66,7 +65,7 @@ export default defineComponent({
             Api.json('//api.ipify.org?format=json').then(({ ip }) => {
               Api.json(`http://ip-api.com/json/${ip}?fields=lat,lon`).then(
                 ({ lat, lon }) => {
-                  getWeatherByLatLon(lat, lon).then((weather) => {
+                  Weather.getByLatLon(lat, lon).then((weather) => {
                     if (weather.getElementsByTagName('current')[0]) {
                       citiesWeather.value.push(new Weather(weather))
                     } else {

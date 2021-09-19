@@ -37,7 +37,6 @@ import WButton from '@/components/WButton.vue'
 import SettingsItem from '@/components/SettingsItem.vue'
 import { PropType, ref } from 'vue'
 import Weather from '@/types/Weather'
-import { getWeatherByLocation } from '@/utils/utils'
 
 export default {
   name: 'settings',
@@ -68,7 +67,7 @@ export default {
 
     const addLocation = (): void => {
       isLoading.value = true
-      getWeatherByLocation(query.value)
+      Weather.getByLocation(query.value)
         .then((weather) => {
           if (weather.getElementsByTagName('current')[0]) {
             const newWeather = new Weather(weather)
