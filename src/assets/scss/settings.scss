@@ -1,0 +1,46 @@
+.settings {
+  width: min-content;
+  margin: 0 auto;
+
+  &__header {
+    display: flex;
+  }
+
+  &__title {
+    flex: 1 0 auto;
+
+    font-weight: 700;
+  }
+
+  &__input-title {
+    font-weight: 700;
+  }
+
+  &__input-form {
+    display: flex;
+    max-width: 360px;
+  }
+
+  &__input {
+    flex: 1 0 auto;
+    padding: 4px;
+  }
+
+  &__validation {
+    color: red;
+  }
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  max-width: 360px;
+  margin-bottom: 8px;
+  padding: 2px;
+
+  background: #ccb;
+
+  &__title {
+    flex: 1 0 auto;
+  }
+}

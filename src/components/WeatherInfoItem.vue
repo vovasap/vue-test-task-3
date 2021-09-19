@@ -44,32 +44,3 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss">
-.weather-info-item {
-  padding: 10px;
-
-  &__location {
-    margin-bottom: 0;
-
-    font-weight: 700;
-    font-size: 16px;
-  }
-
-  &__main-info {
-    display: flex;
-    justify-content: space-evenly;
-
-    font-size: 36px;
-  }
-
-  &__additional-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    & div {
-      padding: 5px 0;
-      margin: auto;
-    }
-  }
-}
-</style>

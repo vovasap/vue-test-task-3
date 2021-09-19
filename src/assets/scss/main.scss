@@ -6,3 +6,16 @@ body {
   font-family: Roboto, Arial, sans-serif;
   font-size: 14px;
 }
+
+.app {
+  max-width: 680px;
+  margin: 0 auto;
+
+  @media (max-width: 700px) {
+    max-width: 360px;
+  }
+}
+
+@import 'settings';
+@import 'weather';
+@import 'w-button';

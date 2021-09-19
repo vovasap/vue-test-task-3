@@ -33,20 +33,3 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss">
-.weather-info {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-
-  &__item {
-    width: 320px;
-  }
-
-  &__gear {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  }
-}
-</style>

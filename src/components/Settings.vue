@@ -140,37 +140,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-.settings {
-  width: min-content;
-  margin: 0 auto;
-
-  &__header {
-    display: flex;
-  }
-
-  &__title {
-    flex: 1 0 auto;
-
-    font-weight: 700;
-  }
-
-  &__input-title {
-    font-weight: 700;
-  }
-
-  &__input-form {
-    display: flex;
-    max-width: 360px;
-  }
-
-  &__input {
-    flex: 1 0 auto;
-    padding: 4px;
-  }
-
-  &__validation {
-    color: red;
-  }
-}
-</style>

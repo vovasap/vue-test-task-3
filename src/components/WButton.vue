@@ -30,15 +30,3 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss">
-.w-button {
-  padding: 4px;
-
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  &__icon {
-    vertical-align: middle;
-  }
-}
-</style>

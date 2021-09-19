@@ -90,12 +90,5 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-.app {
-  max-width: 680px;
-  margin: 0 auto;
-
-  @media (max-width: 700px) {
-    max-width: 360px;
-  }
-}
+@import './assets/scss/main.scss';
 </style>

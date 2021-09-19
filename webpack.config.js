@@ -40,7 +40,7 @@ module.exports = (env) => {
             loaders: {
               ts: 'ts-loader',
             },
-            esModule: true,
+            customElement: true,
           },
         },
         {

@@ -50,18 +50,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-.settings-item {
-  display: flex;
-  align-items: center;
-  max-width: 360px;
-  margin-bottom: 8px;
-  padding: 2px;
-
-  background: #ccb;
-
-  &__title {
-    flex: 1 0 auto;
-  }
-}
-</style>
